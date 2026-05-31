@@ -229,8 +229,8 @@ h1, h2, h3 {
   background: linear-gradient(
     105deg,
     rgba(20,16,8,0.58) 0%,
-    rgba(20,16,8,0.28) 52%,
-    rgba(20,16,8,0.04) 100%
+    rgba(20,16,8,0.28) 35%,
+    rgba(20,16,8,0.04) 70%
   );
 }
 .hero__content {
