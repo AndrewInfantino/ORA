@@ -88,7 +88,7 @@ form.addEventListener('submit', async (e) => {
   submitBtn.disabled  = true;
 
   // If the key hasn't been set yet, still show success for preview/testing
-  if (WEB3FORMS_KEY === 'YOUR_WEB3FORMS_KEY_HERE') {
+  if (WEB3FORMS_KEY === 'd4ea5f6a-ffa8-446e-bf06-af21878ce321') {
     setTimeout(showSuccess, 600);
     return;
   }
