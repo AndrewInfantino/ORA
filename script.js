@@ -63,18 +63,9 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 /* ---- 7. Waitlist form — Web3Forms submission ---- */
-/*
-  HOW TO ACTIVATE:
-  1. Go to https://web3forms.com and enter andrewinfantino@gmail.com
-  2. Copy the free access key they send you
-  3. Replace 'YOUR_WEB3FORMS_KEY_HERE' below with that key
-  That's it — submissions land in your inbox instantly, no backend needed.
-*/
-const WEB3FORMS_KEY = 'YOUR_WEB3FORMS_KEY_HERE';
-
+const WEB3FORMS_KEY = 'd4ea5f6a-ffa8-446e-bf06-af21878ce321';
 const form       = document.getElementById('waitlistForm');
 const successMsg = document.getElementById('successMsg');
-
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
 
@@ -87,12 +78,6 @@ form.addEventListener('submit', async (e) => {
   btnText.textContent = 'Sending…';
   submitBtn.disabled  = true;
 
-  // If the key hasn't been set yet, still show success for preview/testing
-  if (WEB3FORMS_KEY === 'd4ea5f6a-ffa8-446e-bf06-af21878ce321') {
-    setTimeout(showSuccess, 600);
-    return;
-  }
-
   try {
     const res = await fetch('https://api.web3forms.com/submit', {
       method: 'POST',
@@ -100,24 +85,32 @@ form.addEventListener('submit', async (e) => {
       body: JSON.stringify({
         access_key: WEB3FORMS_KEY,
         subject:    `New ORA Waitlist Signup — ${name}`,
-        from_name:  name,
+        name:       name,
         email:      email,
-        to:         'andrewinfantino@gmail.com',
         message:    `New waitlist signup:\n\nName: ${name}\nEmail: ${email}`
       })
     });
+
     const data = await res.json();
-    if (data.success) showSuccess();
-    else { btnText.textContent = 'Try again'; submitBtn.disabled = false; }
-  } catch {
-    // Network error — show success so UX never breaks
-    showSuccess();
+    console.log('Web3Forms response:', data);
+
+    if (data.success === true) {
+      showSuccess();
+    } else {
+      console.error('Form error:', data);
+      btnText.textContent = 'Try again';
+      submitBtn.disabled = false;
+    }
+  } catch (err) {
+    console.error('Network error:', err);
+    btnText.textContent = 'Try again';
+    submitBtn.disabled = false;
   }
 
   function showSuccess() {
-    form.style.opacity        = '0';
-    form.style.pointerEvents  = 'none';
-    form.style.transition     = 'opacity 0.4s';
+    form.style.opacity       = '0';
+    form.style.pointerEvents = 'none';
+    form.style.transition    = 'opacity 0.4s';
     successMsg.classList.add('visible');
   }
 });
