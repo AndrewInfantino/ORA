@@ -98,7 +98,8 @@ form.addEventListener('submit', async (e) => {
       form.style.opacity       = '0';
       form.style.pointerEvents = 'none';
       successMsg.classList.add('visible');
-    } else {
+   } else {
+      alert('Error: ' + JSON.stringify(data));
       btnText.textContent  = 'Try again';
       submitBtn.disabled   = false;
     }
